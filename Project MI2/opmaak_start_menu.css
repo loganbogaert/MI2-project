@@ -1,0 +1,144 @@
+.startSpelMenu
+{
+    border-radius: 0.5em;
+    display: table;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-110%);
+    background-color: #f4f4d7;
+    box-shadow: 0px 0px 0.5em #888888;
+}
+@font-face 
+{    
+    font-family: Montserrat-ExtraBold;
+    src: url(Montserrat-ExtraBold.ttf);
+}
+.customFont 
+{
+     font-family: Montserrat-ExtraBold;
+}
+body
+{
+    padding: 0;
+    margin: 0;
+    background-image: url(background_image.jpg);
+    background-repeat: no-repeat;
+}
+.title
+{
+    padding: 0 2.5em;
+    color: #808080;
+    font-size: 20px;
+    text-align: center;
+}
+.div1,.div3
+{
+    width: 60%;
+}
+.div1
+{
+    margin: 2em auto;
+}
+.div3
+{
+    margin: 2em auto 1em auto;
+}
+.div2
+{
+    width: 40%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,50%);
+}
+input[type=text]
+{
+    width: 100%;
+    padding: 0.5em 0.3em;
+    background-color:#d9d9d9;
+    border-radius: 3em;
+    border: none;
+}
+::placeholder
+{
+     color: #a3c2c2;
+}
+.mainButton
+{
+    width: 100%;
+    padding: 0.5em 0;
+    border-radius: 0.5em;
+    border: none;
+    background-color: #ffb380;
+    color: #f2f2f2;
+}
+@-webkit-keyframes example 
+{
+   from {transform: translate(-50%, -50%) rotate(0deg);}  to {transform: translate(-50%, -50%) rotate(360deg);}
+}
+
+/* Standard syntax */
+@keyframes example 
+{
+    from {transform: translate(-50%, -50%) rotate(0deg);}  to {transform: translate(-50%, -50%) rotate(360deg);}
+}
+@-webkit-keyframes example2 
+{
+   from {transform: translate(-50%, -50%) rotate(360deg);}  to {transform: translate(-50%, -110%) rotate(0deg);}
+}
+
+/* Standard syntax */
+@keyframes example2
+{
+    from {transform: translate(-50%, -50%) rotate(0deg);}  to {transform: translate(-50%, -110%) rotate(360deg);}
+}
+@-webkit-keyframes example3 
+{
+   from {background-color:  rgba(0, 0, 0, 0);}  to {background-color:  rgba(0, 0, 0, 0.7);}
+}
+
+/* Standard syntax */
+@keyframes example3
+{
+    from {background-color:  rgba(0, 0, 0, 0);}  to {background-color:  rgba(0, 0, 0, 0.7);}
+}
+@-webkit-keyframes example4
+{
+   from {background-color:  rgba(0, 0, 0, 0.7);}  to {background-color:  rgba(0, 0, 0, 0);}
+}
+
+/* Standard syntax */
+@keyframes example4
+{
+    from {background-color:  rgba(0, 0, 0, 0.7);}  to {background-color:  rgba(0, 0, 0, 0);}
+}
+.rotate
+{
+    animation-name: example;
+}
+.rotatetwo
+{
+    animation-name: example2;
+}
+.show
+{
+    animation-name: example3;
+}
+.hide
+{
+    animation-name: example4;
+    
+}
+.hide, .show, .rotatetwo, .rotate
+{
+    animation-duration: 0.8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+.divHide
+{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color:  rgba(0, 0, 0, 0);
+}
