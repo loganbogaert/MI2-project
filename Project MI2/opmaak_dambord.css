@@ -9,19 +9,39 @@
 }
 .whiteCase, .blackCase
 {
-    width: 12vw;
-    height: 12vw;
+    width: 12.5vw;
+    height: 12.5vw;
     float: left;
 }
 .whiteCase
 {
-    background-color: beige;
+    background-color: #f9f9eb;
 }
 .blackCase
 {
-    background-color: black;
+    background-color: #BA7A3A;
 }
 .clear
 {
     clear: both;
+}
+.dameBlanche, .dameNoir
+{
+    width: 8vw;
+    height: 8vw;
+    position: relative;
+    border-radius: 50%;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.dameBlanche
+{
+    background-color: #ff4d4d;
+    border: solid 3px white;
+}
+.dameNoir
+{
+    background-color: #008080;
+    border: solid 3px black;
 }
