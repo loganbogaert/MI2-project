@@ -6,11 +6,13 @@
     top: 50%;
     transform: translate(-50%,-50%);
     opacity: 0;
+    border: 3px solid #4d4d4d;
+    box-shadow: 0 0 0.5em white;
 }
 .whiteCase, .blackCase
 {
-    width: 12.5vw;
-    height: 12.5vw;
+    width: 11.5vw;
+    height: 11.5vw;
     float: left;
 }
 .whiteCase
@@ -42,6 +44,6 @@
 }
 .dameNoir
 {
-    background-color: #008080;
+    background-color: #0066cc;
     border: solid 3px black;
 }

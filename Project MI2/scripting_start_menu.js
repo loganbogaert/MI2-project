@@ -1,3 +1,10 @@
+//********************<vars>************************
+// array maken
+var plaatsen = [];
+// var maken
+var aantal = 0;
+// var maken
+var nodes = "";
 //********************<function>********************
 function hireDiv()
 {
@@ -13,20 +20,59 @@ function hireDiv()
     loadDam();
 }
 //********************<function>********************
+function addArray(rij,kolom)
+{
+    // in array toevoegen
+    plaatsen.push(rij.toString()+";"+kolom.toString());
+    // aantal verhogen
+    aantal++;
+}
+//********************<function>********************
+function loadPion(dame,rij,kolom)
+{
+   // div opstellen
+   nodes+= "<div class='" + dame + "' id = '" + aantal +"'></div>";
+   // function
+   addArray(rij,kolom);   
+}
+//********************<function>********************
 function hideDiv()
 {
-    // call jquery method
-    $(".startSpelMenu").removeClass("rotate");
-    // call jquery method
-    $(".divHide").removeClass("show");
-    // call jquery method
-    $(".divHide").addClass("hide");
-    // call jquery method
-    $(".startSpelMenu").animate({top: "0%"},800);
-    // call jquery method
-    $(".startSpelMenu").addClass("rotatetwo");  
-    // call jquery method
-    $(".damBord").fadeTo(800, 1); 
+    // player 1
+    var player1 = document.getElementById("player1").value;
+    // player 2
+    var player2 = document.getElementById("player2").value;
+    // kijken of player 1 en 2 niet leeg zijn
+    if(player1 != "" && player2 !="")
+    {
+        // call jquery method
+        $(".startSpelMenu").removeClass("rotate");
+        // call jquery method
+        $(".divHide").removeClass("show");
+        // call jquery method
+        $(".divHide").addClass("hide");
+        // call jquery method
+        $(".startSpelMenu").animate({top: "0%"},800);
+        // call jquery method
+        $(".startSpelMenu").addClass("rotatetwo");  
+        // call jquery method
+        $(".damBord").fadeTo(800, 1); 
+    }
+    else
+    {
+        // content van title veranderen
+        document.getElementById("player1").placeholder = "Name player 1";
+        // content van title veranderen
+        document.getElementById("player2").placeholder = "Name player 2";
+        // call jquery method
+        $("#player1").removeClass("player");
+        // call jquery method
+        $("#player2").removeClass("player");
+        // call jquery method
+        $("#player1").addClass("red");
+        // call jquery method
+        $("#player2").addClass("red");
+    }
 }
 //********************<function>********************
 function loadDam()
@@ -37,8 +83,6 @@ function loadDam()
     var rij = 8;
     // locale var 
     var kolom = 8;
-    // locale var
-    var nodes = "";
     // for lus voor de rijen te tekenen
     for(i=0;i<rij;i++)
     {
@@ -61,14 +105,14 @@ function loadDam()
                 // rij 0 en 2
                 if((i==0 && b!=0 || i==2 && b!=0 ) && b % 2 != 0 ) 
                 {
-                    // div opstellen
-                    nodes+= "<div class='dameNoir'></div>";
+                    // function
+                    loadPion("dameNoir",i,b);
                 }
                 // rij 1
                 if(i==1 && b!=7 && b % 2 == 0)
                 {
-                    // div opstellen
-                    nodes+= "<div class='dameNoir'></div>";
+                   // function
+                   loadPion("dameNoir",i,b);
                 }  
             }
             // als rij tussen 5 en 8 zit
@@ -77,14 +121,14 @@ function loadDam()
                // rij 5 en 7
                if((i==5 && b!=7 || i==7 &&  b!=7) && b % 2 ==0)
                {
-                   // div opstellen
-                   nodes+= "<div class='dameBlanche'></div>";
+                   // function
+                   loadPion("dameBlanche",i,b);
                }
                // rij 6 
                if(i==6 && b!=0 && b % 2 != 0 )
                {
-                   // div opstellen
-                   nodes+= "<div class='dameBlanche'></div>";
+                   // function
+                   loadPion("dameBlanche",i,b);
                }
             }
             // div opstellen
