@@ -2,7 +2,7 @@
 // array maken
 var plaatsen = [];
 // var maken
-var aantal = 0;
+var aantal = 1;
 // var maken
 var nodes = "";
 //********************<function>********************
@@ -31,7 +31,7 @@ function addArray(rij,kolom)
 function loadPion(dame,rij,kolom)
 {
    // div opstellen
-   nodes+= "<div class='" + dame + "' id = '" + aantal +"'></div>";
+   nodes+= "<div class='" + dame + "' id = '" + aantal +"'" +"onclick='press(" + aantal + ")'" + "></div>";
    // function
    addArray(rij,kolom);   
 }
@@ -45,6 +45,14 @@ function hideDiv()
     // kijken of player 1 en 2 niet leeg zijn
     if(player1 != "" && player2 !="")
     {
+        // player 1 op scherm zetten
+        document.getElementById("playerone").innerHTML = player1;
+        // player 2 op scherm zetten
+        document.getElementById("playertwo").innerHTML = player2;
+        // call jquery method
+        $(".player1").animate({opacity: "1"},800);
+        // call jquery method
+        $(".player2").animate({opacity: "1"},800);
         // call jquery method
         $(".startSpelMenu").removeClass("rotate");
         // call jquery method
@@ -141,4 +149,3 @@ function loadDam()
     // op schermen
     document.getElementById("dam").innerHTML = nodes;
 }
-    

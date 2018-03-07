@@ -146,3 +146,20 @@ input[type=text]
     z-index: -1;
     background-color:  rgba(0, 0, 0, 0);
 }
+.player1,.player2
+{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15pt;
+    color: #1aff1a;
+    opacity: 0;
+}
+.player1
+{
+    top: 2em;
+}
+.player2
+{
+    bottom: 2em;
+}
