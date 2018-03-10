@@ -130,7 +130,6 @@ input[type=text]
 .hide
 {
     animation-name: example4;
-    
 }
 .hide, .show, .rotatetwo, .rotate
 {

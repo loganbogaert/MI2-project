@@ -1,10 +1,12 @@
 //********************<vars>************************
 // array maken
-var plaatsen = [];
+var plaatsen = [""];
 // var maken
 var aantal = 1;
 // var maken
 var nodes = "";
+// var maken
+var actuelePlaats = "";
 //********************<function>********************
 function hireDiv()
 {
@@ -101,12 +103,18 @@ function loadDam()
             nodes+= "<div class='";
             // kijken of het zwart of wit moet zijn
             if(bool){nodes+="blackCase ";} else {nodes+="whiteCase ";}
-            // bool veranderen
-            bool = !bool;
             // clear classe toevoegen
             if(b==0 && i !=0) {nodes+="clear";}
             // div opstellen
-            nodes+= "'>";
+            nodes+= "'";
+            // event toevoegen
+            if(bool) {nodes+= "Onclick='movePion(" + i +"," + b + ")'";}
+            // div opstellen
+            nodes+= "id = '"+ i +";" + b +"'";
+            // div opstellen
+            nodes+= ">";
+            // bool veranderen
+            bool = !bool;
             // als rij tussen 0 en 3 zit
             if(i>=0 && i<3)
             {
@@ -143,8 +151,7 @@ function loadDam()
             nodes+="</div>";
          }
         // bool wisselen als het een even getal is, anders klopt het dambord niet
-        if(b % 2 == 0) {bool = !bool;}
-       
+        if(b % 2 == 0) {bool = !bool;}  
     }
     // op schermen
     document.getElementById("dam").innerHTML = nodes;
