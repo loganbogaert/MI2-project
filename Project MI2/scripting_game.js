@@ -46,7 +46,33 @@ function colorPion(id)
 //********************<function>********************
 function movePion(kolom, rij)
 {
-    
+    // plaats maken
+    var kolomEnRij = kolom.toString() + ";" + rij.toString();
+    // plaats van Id nemen
+    var plaatsId = plaatsen[vorigeId];
+    // bool maken
+    var hoortErbij = false; var kanBewegen = false;
+    //*************<kijken of het gaat om een pion of plaats>*************
+    for(i=0;i<plaatsen.length;i++)
+    {
+        // kijken of het overeen komt
+        if(plaatsen[i]==kolomEnRij) {hoortErbij=true;break;}
+    }
+    // check bool
+    if(!hoortErbij)
+    {
+        // door array lopen
+        for(i=0;i<arrayMogelijkePlaatsen.length;i++)
+        {
+            // ieder appart checken
+            if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}
+        }
+        // wanneer men de pion toelaat om te bewegen
+        if(kanBewegen)
+        {
+            
+        }
+    }
 } 
 //********************<function>********************
 function check(array,player,plaatsPion)
@@ -81,17 +107,8 @@ function check(array,player,plaatsPion)
         if(vorigeId==specialePionnen[i]) {bool5==false;break;}
     }
     // wanneer het over een normaal pion gaat
-    if(bool5)
-    {
-        // ++ of --
-        if(player){getal2++; getal1++;} else{getal2--; getal1--;}
-        // in array pushen
-        arrayMogelijkePlaatsen.push(getal1+";"+getal2);
-        // plus twee
-        if(player){getal2 = getal2-2;} else {getal2 = getal2+2;}
-        // in array pushen
-        arrayMogelijkePlaatsen.push(getal1+";"+getal2);
-    }
+    if(bool5){seePlaces(player,getal1,getal2);}
+    // wanneer het over een speciaal pion gaat
     else
     {
         
@@ -163,8 +180,20 @@ function check(array,player,plaatsPion)
         // als de id bestaat moet de kleur veranderd worden
         if(id!=null)
         {
-            // kleur aanpassen
+           // kleur aanpassen
            document.getElementById(arrayMogelijkePlaatsen[i]).style.backgroundColor = "#cc0000"; 
         }
     }
+}
+//********************<function>********************
+function seePlaces(player,getal1,getal2)
+{
+    // ++ of --
+    if(player){getal2++; getal1++;} else{getal2--; getal1--;}
+    // in array pushen
+    arrayMogelijkePlaatsen.push(getal1+";"+getal2);
+    // plus twee
+    if(player){getal2 = getal2-2;} else {getal2 = getal2+2;}
+    // in array pushen
+    arrayMogelijkePlaatsen.push(getal1+";"+getal2);
 }
