@@ -5,6 +5,8 @@ var id = "";
 var arrayMogelijkePlaatsen = [];
 var specialePionnen = [];
 var plaats = "";
+var basicLeft = "";
+var basic  = "";
 //********************<function>********************
 function press(id)
 {
@@ -41,7 +43,6 @@ function colorPion(id)
     var array = plaatsPion.split(";");
     // functie oproepen
     check(array,player1AanDeBeurt,plaatsPion);
-    
 }
 //********************<function>********************
 function movePion(kolom, rij)
@@ -70,12 +71,44 @@ function movePion(kolom, rij)
         // wanneer men de pion toelaat om te bewegen
         if(kanBewegen)
         {
-            
+            // top nemen 
+            var top = document.getElementById(vorigeId).style.top;
+            // var maken
+            var left = "";
+            // in array steken
+            var array1 = plaatsId.split(";"); var array2 = kolomEnRij.split(";");
+            // wanneer men de pion voor de eerste keer beweegt
+            if(top == "")
+            {
+                // top nemen van css
+                top  = parseFloat($(".dameBlanche").css('top').replace(/[^-\d\.]/g, ''));
+                // basic var maken
+                basic = top * 2;
+                // naar float omzette,
+                basic = parseFloat(basic);
+                // left een waarde geven
+                left = parseFloat(top);
+            }
+            // wanneer de pion naar boven moet
+            if(array1[0] > array2[0]){ top = top - basic;}
+            // wanneer de pion naar beneden moet
+            if(array1[0] < array2[0]){ top = top + basic;}
+            // wanneer de pion naar rechts moet
+            if(array1[1] < array2[1]){ left = left + basic;}
+            // wanneer de pion naar links moet
+            if(array1[1] > array2[1]){ left = left - basic;}
+            // andere speler aan de beurt
+            player1AanDeBeurt = !player1AanDeBeurt;
+            // use function
+            veranderKleur("#BA7A3A");
+            // gele schadow weg doen
+            $("#"+vorigeId).removeClass("shadow");
+            // pion bewegen
+            $("#"+vorigeId).animate({top: top, left : left});
         }
     }
 } 
-//********************<function>********************
-function check(array,player,plaatsPion)
+function veranderKleur(kleur)
 {
     //*********<kleuren terug normaal zetten>*********
     for(i=0;i<arrayMogelijkePlaatsen.length;i++)
@@ -86,9 +119,15 @@ function check(array,player,plaatsPion)
         if(id!=null)
         { 
            // kleur aanpassen
-           document.getElementById(arrayMogelijkePlaatsen[i]).style.backgroundColor = "#BA7A3A";   
+           document.getElementById(arrayMogelijkePlaatsen[i]).style.backgroundColor = kleur;   
         }
     }
+}
+//********************<function>********************
+function check(array,player,plaatsPion)
+{
+    // use function
+    veranderKleur("#BA7A3A");
     // array leeg maken
     arrayMogelijkePlaatsen = [];
     // eerste getal nemen
@@ -172,18 +211,8 @@ function check(array,player,plaatsPion)
             }
         }
     }
-    //*************<laten zien welke plaatsen beschikbaar zijn>*************
-    for(i=0;i<arrayMogelijkePlaatsen.length;i++)
-    {
-        // id nemen
-        var id = document.getElementById(arrayMogelijkePlaatsen[i]);
-        // als de id bestaat moet de kleur veranderd worden
-        if(id!=null)
-        {
-           // kleur aanpassen
-           document.getElementById(arrayMogelijkePlaatsen[i]).style.backgroundColor = "#cc0000"; 
-        }
-    }
+    // use function
+    veranderKleur("#cc0000");
 }
 //********************<function>********************
 function seePlaces(player,getal1,getal2)
