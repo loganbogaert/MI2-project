@@ -13,26 +13,15 @@ function press(id)
     // parse int
     this.id = parseInt(id);
     // zien wie aan de beurt is 
-    if(player1AanDeBeurt == false && id>=13 && id<25)
-    {
-        // function
-        colorPion(id);
-    }
-    if(player1AanDeBeurt == true && id>=1 && id <13)
-    {
-        // function
-        colorPion(id);
-    }
+    if(player1AanDeBeurt == false && id>=13 && id<25){ colorPion(id);}
+    // zien wie aan de beurt is 
+    if(player1AanDeBeurt == true && id>=1 && id <13) { colorPion(id);}
 }
 //********************<function>********************
 function colorPion(id)
 {
     // vorige id zijn classe verwijderen
-    if(vorigeId!="")
-    {
-        // call jquery method
-        $("#"+vorigeId.toString()).removeClass("shadow");
-    }
+    if(vorigeId!=""){ $("#"+vorigeId.toString()).removeClass("shadow");}
     // call jquery method
     $("#"+id.toString()).addClass("shadow");
     // huidige id afgeven
@@ -54,21 +43,12 @@ function movePion(kolom, rij)
     // bool maken
     var hoortErbij = false; var kanBewegen = false;
     //*************<kijken of het gaat om een pion of plaats>*************
-    for(i=0;i<plaatsen.length;i++)
-    {
-        // kijken of het overeen komt
-        if(plaatsen[i]==kolomEnRij) {hoortErbij=true;break;}
-    }
+    for(i=0;i<plaatsen.length;i++) { if(plaatsen[i]==kolomEnRij) {hoortErbij=true;break;}}
     // check bool
     if(!hoortErbij)
     { 
         // door array lopen
-        for(i=0;i<arrayMogelijkePlaatsen.length;i++)
-        {
-            // ieder appart checken
-            if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}
-        }
-        
+        for(i=0;i<arrayMogelijkePlaatsen.length;i++) {if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}}
         // wanneer men de pion toelaat om te bewegen
         if(kanBewegen)
         {
@@ -79,15 +59,7 @@ function movePion(kolom, rij)
             // left instellen
             var left = parseFloat($("#"+vorigeId).css('left').replace(/[^-\d\.]/g, ''));
             // wanneer men de pion voor de eerste keer beweegt
-            if(!isbegonnen)
-            {
-                // change bool
-                isbegonnen = !isbegonnen;
-                // basic var maken
-                basic = top * 2;
-                // naar float omzetten
-                basic = parseFloat(basic);
-            }
+            if(!isbegonnen){ isbegonnen = !isbegonnen; basic = top * 2; basic = parseFloat(basic);}
             // wanneer de pion naar boven moet
             if(array1[0] > array2[0]){ top = top - basic;}
             // wanneer de pion naar beneden moet
@@ -102,14 +74,14 @@ function movePion(kolom, rij)
             $("#"+vorigeId).removeClass("shadow");
             // pion bewegen
             $("#"+vorigeId).animate({top: top, left : left});
+            // plaats updaten
             plaatsen[vorigeId] = kolomEnRij;
-            
             // andere speler aan de beurt
             player1AanDeBeurt = !player1AanDeBeurt;
-            
         }
     }
 } 
+//********************<function>********************
 function veranderKleur(kleur)
 {
     //*********<kleuren terug normaal zetten>*********
@@ -118,11 +90,7 @@ function veranderKleur(kleur)
         // id nemen
         var id = document.getElementById(arrayMogelijkePlaatsen[i]);
         // als id bestaat moet de kleur veranderd worden
-        if(id!=null)
-        { 
-           // kleur aanpassen
-           document.getElementById(arrayMogelijkePlaatsen[i]).style.backgroundColor = kleur;   
-        }
+        if(id!=null){ document.getElementById(arrayMogelijkePlaatsen[i]).style.backgroundColor = kleur;}
     }
 }
 //********************<function>********************
@@ -158,13 +126,7 @@ function check(array,player,plaatsPion)
     for(i=0;i<arrayMogelijkePlaatsen.length;i++)
     {
         // break code wanneer men een waarde heeft gevonden
-        if(plaats == arrayMogelijkePlaatsen[i]) 
-        {   
-            // bool op true
-            bool4 = true;
-            // stop code
-            break;
-        }
+        if(plaats == arrayMogelijkePlaatsen[i]) {bool4 = true; break;}
     }
     // use function
     veranderKleur("#cc0000");
@@ -196,18 +158,12 @@ function seePlaces(player,getal1,getal2)
         // index als id nemen
         var index = plaatsen.indexOf(arrayMogelijkePlaatsen[i]);
         // wanneer player 2 aan de beurt is 
-        if(player1AanDeBeurt== false && index > -1)
+        if(index > -1)
         {
             // wanneer er een pion van de tegenstander zich op de plaats bevindt 
-            if(index >=0 && index <13){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);}
-            // plaats leeg maken
-            arrayMogelijkePlaatsen[i] = "";
-        }
-        // wanneer player 1 aan de beurt is 
-        if(player1AanDeBeurt== true && index > -1)
-        {
+            if(!player1AanDeBeurt){if(index >=0 && index <13){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);} }
             // wanneer er een pion van de tegenstander zich op de plaats bevindt 
-            if(index >=12 && index <25){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);}
+            if(player1AanDeBeurt){if(index >=12 && index <25){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);} }
             // plaats leeg maken
             arrayMogelijkePlaatsen[i] = "";
         }
@@ -288,13 +244,7 @@ function seePlaces(player,getal1,getal2)
             // index maken van de plaats
             var index = plaatsen.indexOf(kolomGetal.toString()+";"+ rijGetal.toString());
             // code wordt een keer op de twee uitvoerd 
-            if(bool)
-            {
-                // als er geen pion op dat veld staat
-                if(index== -1){gaDoor = true; }
-                // bool veranderen om volgende keer andere code uit te voeren
-                bool = false;
-            }
+            if(bool){if(index== -1){gaDoor = true; } bool = false;}
             // code wordt een keer op de twee uitvoerd 
             else
             {
