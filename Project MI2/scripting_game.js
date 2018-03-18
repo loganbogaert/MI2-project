@@ -14,6 +14,8 @@ var kolomEnRij;
 var nummer = 0;
 var plaatsIdPion;
 var telMaarOp = true;
+var scorePlayer1 = 0;
+var scorePlayer2 = 0;
 //********************<function>********************
 function press(id)
 {
@@ -362,7 +364,21 @@ function seePlaces(player,getal1,getal2)
             // index maken van de plaats
             var index = plaatsen.indexOf(kolomGetal.toString()+";"+ rijGetal.toString());
             // code wordt een keer op de twee uitvoerd 
-            if(bool){if(index== -1){gaDoor = true; } bool = false;}
+            if(bool)
+            {
+                // als er geen pion staat
+                if(index== -1){ gaDoor = true;}
+                // als er wel een pion staat, maar van de speler zijn eige team
+                else
+                {
+                    // stop code 
+                    if(index >=1 && index  <13 && player1AanDeBeurt == true){ gaDoor = true;} 
+                    // stop code 
+                    if(index >=13 && index <25 && player1AanDeBeurt == false){ gaDoor = true;} 
+                }
+                // change bool
+                bool = false;
+            }
             // code wordt een keer op de twee uitvoerd 
             else
             {
@@ -374,7 +390,7 @@ function seePlaces(player,getal1,getal2)
                 else
                 { 
                     // als er geen pion staat op het veld, toevoegen in pad
-                    if(index== -1){ pad.push(kolomGetal.toString()+";"+ rijGetal.toString());}
+                    if(index== -1){pad.push(kolomGetal.toString()+";"+ rijGetal.toString());}
                     // zo niet stoppen we de while lus
                     else{ gaDoor = true;}
                     // bool veranderen om volgende keer andere code uit te voeren
