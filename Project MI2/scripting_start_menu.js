@@ -7,6 +7,10 @@ var aantal = 1;
 var nodes = "";
 // var maken
 var actuelePlaats = "";
+// player maken
+var player1 = "";
+// player maken
+var player2 = "";
 //********************<function>********************
 function hireDiv()
 {
@@ -41,9 +45,9 @@ function loadPion(dame,rij,kolom)
 function hideDiv()
 {
     // player 1
-    var player1 = document.getElementById("player1").value;
+    player1 = document.getElementById("player1").value;
     // player 2
-    var player2 = document.getElementById("player2").value;
+    player2 = document.getElementById("player2").value;
     // kijken of player 1 en 2 niet leeg zijn
     if(player1 != "" && player2 !="")
     {
