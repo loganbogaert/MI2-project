@@ -3,10 +3,17 @@ var player1AanDeBeurt = false;
 var vorigeId = "";
 var id = "";
 var arrayMogelijkePlaatsen = [];
+var padTotPion = [];
 var specialePionnen = [];
 var plaats = "";
 var basic  = "";
 var isbegonnen = false;
+var klokId;
+var ind;
+var kolomEnRij;
+var nummer = 0;
+var plaatsIdPion;
+var telMaarOp = true;
 //********************<function>********************
 function press(id)
 {
@@ -37,9 +44,9 @@ function colorPion(id)
 function movePion(kolom, rij)
 {
     // plaats maken
-    var kolomEnRij = kolom.toString() + ";" + rij.toString();
+    kolomEnRij = kolom.toString() + ";" + rij.toString();
     // plaats van Id nemen
-    var plaatsId = plaatsen[vorigeId];
+    var plaatsId = plaatsen[vorigeId]; plaatsIdPion = plaatsen[vorigeId];
     // bool maken
     var hoortErbij = false; var kanBewegen = false;
     //*************<kijken of het gaat om een pion of plaats>*************
@@ -54,33 +61,101 @@ function movePion(kolom, rij)
         {
             // in array steken
             var array1 = plaatsId.split(";"); var array2 = kolomEnRij.split(";");
+            // bool maken
+            var timerNietNodig = true; telMaarOp = true;
             // top instellen
             var top = parseFloat($("#"+vorigeId).css('top').replace(/[^-\d\.]/g, ''));
             // left instellen
             var left = parseFloat($("#"+vorigeId).css('left').replace(/[^-\d\.]/g, ''));
             // wanneer men de pion voor de eerste keer beweegt
             if(!isbegonnen){ isbegonnen = !isbegonnen; basic = top * 2; basic = parseFloat(basic);}
-            // wanneer de pion naar boven moet
-            if(array1[0] > array2[0]){ top = top - basic;}
-            // wanneer de pion naar beneden moet
-            if(array1[0] < array2[0]){ top = top + basic;}
-            // wanneer de pion naar rechts moet
-            if(array1[1] < array2[1]){left = left + basic;}
-            // wanneer de pion naar links moet
-            if(array1[1] > array2[1]){left = left - basic;}
-            // use function
-            veranderKleur("#BA7A3A");
-            // gele schadow weg doen
-            $("#"+vorigeId).removeClass("shadow");
-            // pion bewegen
-            $("#"+vorigeId).animate({top: top, left : left});
-            // plaats updaten
-            plaatsen[vorigeId] = kolomEnRij;
-            // andere speler aan de beurt
-            player1AanDeBeurt = !player1AanDeBeurt;
+            // zien hoeveel stappen men moet nemen
+            if(padTotPion.length==0){ move(array1,array2,top,left,kolomEnRij);}
+            // als het pad bestaat
+            else
+            {
+                // door array lopen
+                for(i=0;i<padTotPion.length;i++)
+                {
+                    // multidimensionale array
+                    for(b=0;b<padTotPion[i].length;b++){if(padTotPion[i][b] == kolomEnRij){timerNietNodig=false;ind=i;break;}}
+                }
+                // als er een pad bestaat, maar niet bestemt is voor onze pion
+                if(timerNietNodig) { move(array1,array2,top,left,kolomEnRij);}
+                // wanneer er wel een timer moet worden aangemaakt
+                else
+                {
+                    // eerst de methode roepen, anders moet men 800 millesconden wachten
+                    repeat();
+                    // start timer  
+                    klokId = setInterval(repeat,800);
+                }
+            }
         }
     }
-} 
+}
+//********************<function>********************
+function repeat()
+{
+    // arrays maken
+    var array1 = plaatsIdPion.split(";");var array2 = padTotPion[ind][nummer].split(";");
+    // top instellen
+    var top = parseFloat($("#"+vorigeId).css('top').replace(/[^-\d\.]/g, ''));
+    // left instellen
+    var left = parseFloat($("#"+vorigeId).css('left').replace(/[^-\d\.]/g, ''));
+    // wanneer de pion naar boven moet
+    if(array1[0] > array2[0]){ top = top - basic;}
+    // wanneer de pion naar beneden moet
+    if(array1[0] < array2[0]){ top = top + basic;}
+    // wanneer de pion naar rechts moet
+    if(array1[1] < array2[1]){left = left + basic;}
+    // wanneer de pion naar links moet
+    if(array1[1] > array2[1]){left = left - basic;}
+    // use function
+    veranderKleur("#BA7A3A");
+    // gele schadow weg doen
+    $("#"+vorigeId).removeClass("shadow");
+    // pion bewegen
+    $("#"+vorigeId).animate({top: top, left : left});
+    // wanneer de pion weg moet
+    if(plaatsen.indexOf(padTotPion[ind][nummer]) > -1)
+    {
+        // pion onzichtbaar maken
+        $("#"+plaatsen.indexOf(padTotPion[ind][nummer])).fadeOut();
+    }
+    // plaats aanpassen van pion die weg is 
+    plaatsen[plaatsen.indexOf(padTotPion[ind][nummer])] = "";
+    // plaats van id aanpassen
+    plaatsIdPion = padTotPion[ind][nummer];
+    // plaats updaten
+    plaatsen[vorigeId] = plaatsIdPion;
+    // timer stoppen als de array erdoor is 
+    if(padTotPion[ind][nummer] == kolomEnRij){clearInterval(klokId); nummer = 0; telMaarOp = false;}
+    // optellen met 1
+    if(telMaarOp){nummer++;}
+}
+//********************<function>********************
+function move(array1,array2,top,left,kolomEnRij)
+{
+    // wanneer de pion naar boven moet
+    if(array1[0] > array2[0]){ top = top - basic;}
+    // wanneer de pion naar beneden moet
+    if(array1[0] < array2[0]){ top = top + basic;}
+    // wanneer de pion naar rechts moet
+    if(array1[1] < array2[1]){left = left + basic;}
+    // wanneer de pion naar links moet
+    if(array1[1] > array2[1]){left = left - basic;}
+    // use function
+    veranderKleur("#BA7A3A");
+    // gele schadow weg doen
+    $("#"+vorigeId).removeClass("shadow");
+    // pion bewegen
+    $("#"+vorigeId).animate({top: top, left : left});
+    // plaats updaten
+    plaatsen[vorigeId] = kolomEnRij;
+    // andere speler aan de beurt
+    player1AanDeBeurt = !player1AanDeBeurt;
+}
 //********************<function>********************
 function veranderKleur(kleur)
 {
@@ -99,7 +174,7 @@ function check(array,player,plaatsPion)
     // use function
     veranderKleur("#BA7A3A");
     // array leeg maken
-    arrayMogelijkePlaatsen = [];
+    arrayMogelijkePlaatsen = []; padTotPion = [];
     // eerste getal nemen
     var getal1 = parseInt(array[0]);
     // tweede getal nemen
@@ -161,9 +236,9 @@ function seePlaces(player,getal1,getal2)
         if(index > -1)
         {
             // wanneer er een pion van de tegenstander zich op de plaats bevindt 
-            if(!player1AanDeBeurt){if(index >=0 && index <13){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);} }
+            if(!player1AanDeBeurt){if(index >=1 && index <13){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);} }
             // wanneer er een pion van de tegenstander zich op de plaats bevindt 
-            if(player1AanDeBeurt){if(index >=12 && index <25){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);} }
+            if(player1AanDeBeurt){if(index >=13 && index <25){aanwezigePionnen.push(arrayMogelijkePlaatsen[i]);} }
             // plaats leeg maken
             arrayMogelijkePlaatsen[i] = "";
         }
@@ -179,6 +254,8 @@ function seePlaces(player,getal1,getal2)
     {
         // pion in stukjes kappen
         var pionArray = aanwezigePionnen[i].split(";");
+        // array maken
+        var pionArray2 = [];
         // bools maken
         var gaatnaarboven; var gaatnaarlinks; var gaDoor = false; var isGestart = false; var bool = true;
         // vars maken 
@@ -211,34 +288,75 @@ function seePlaces(player,getal1,getal2)
                 // als men naar boven en naar en naar rechs gaat 
                 if(gaatnaarboven == true && gaatnaarlinks == false)
                 {
-                    // kolom min 1
-                    kolomGetal = parseInt(kolomGetal) - 1;
-                    // rij plus 1
-                    rijGetal = parseInt(rijGetal) + 1;
+                    // als men niet buiten het bord is
+                    if(rijGetal!=7)
+                    {
+                        // kolom min 1
+                        kolomGetal = parseInt(kolomGetal) - 1;
+                        // rij plus 1
+                        rijGetal = parseInt(rijGetal) + 1;
+                    }
+                    // richting aanpassen
+                    else{gaatnaarlinks = true;}
                 }
                 // als men naar boven en naar en naar links gaat 
                 if(gaatnaarboven == true && gaatnaarlinks == true)
                 {
-                    // kolom min 1
-                    kolomGetal = parseInt(kolomGetal) - 1;
-                    // rij min 1
-                    rijGetal = parseInt(rijGetal) - 1;
+                    // als men niet buiten het bord is
+                    if(rijGetal!=0)
+                    {
+                        // kolom min 1
+                        kolomGetal = parseInt(kolomGetal) - 1;
+                        // rij min 1
+                        rijGetal = parseInt(rijGetal) - 1;
+                    }
+                    // zo wel 
+                    else
+                    {
+                        // richting aanpassen
+                        gaatnaarlinks = false;
+                        // kolom min 1
+                        kolomGetal = parseInt(kolomGetal) - 1;
+                        // rij plus 1
+                        rijGetal = parseInt(rijGetal) + 1;
+                    }
                 }
                 // als men naar beneden en naar en naar links gaat 
                 if(gaatnaarboven == false && gaatnaarlinks == true)
                 {
-                    // kolom plus 1
-                    kolomGetal = parseInt(kolomGetal) + 1;
-                    // rij min 1
-                    rijGetal = parseInt(rijGetal) - 1;
+                     // als men niet buiten het bord is
+                    if(rijGetal!=0)
+                    {
+                        // kolom plus 1
+                        kolomGetal = parseInt(kolomGetal) + 1;
+                        // rij min 1
+                        rijGetal = parseInt(rijGetal) - 1;
+                    }
+                    // zo wel, richting aanpassen
+                    else
+                    {gaatnaarlinks = false;}
                 }
                 // als men naar beneden en naar en naar rechs gaat 
                 if(gaatnaarboven == false && gaatnaarlinks == false)
                 {
-                    // kolom plus 1
-                    kolomGetal = parseInt(kolomGetal) + 1;
-                    // rij plus 1
-                    rijGetal = parseInt(rijGetal) + 1;
+                    // als men niet buiten het bord is
+                    if(rijGetal!=7)
+                    {
+                        // kolom plus 1
+                        kolomGetal = parseInt(kolomGetal) + 1;
+                        // rij plus 1
+                        rijGetal = parseInt(rijGetal) + 1;
+                    }
+                    // zowel
+                    else
+                    {
+                        // richting aanpassen
+                        gaatnaarlinks = true;
+                        // kolom plus 1
+                        kolomGetal = parseInt(kolomGetal) + 1;
+                        // rij min 1
+                        rijGetal = parseInt(rijGetal) - 1;
+                    }
                 }
             }
             // index maken van de plaats
@@ -263,8 +381,12 @@ function seePlaces(player,getal1,getal2)
                     bool = true;
                 } 
             }
+            // pad toevoegen
+            pionArray2.push(kolomGetal.toString()+";"+ rijGetal.toString());
         }
+        // pad toevoegen
+        padTotPion.push(pionArray2);
         // als men een pad heeft voegt men de laatste plaats in de array
-        if(pad.length!=0){ arrayMogelijkePlaatsen.push(pad[pad.length-1]);}    
+        if(pad.length!=0){ arrayMogelijkePlaatsen.push(pad[pad.length-1]);}
     }
 } 
