@@ -168,6 +168,8 @@ function repeat()
             // achter div zetten
             document.getElementById("dam").style.zIndex = "-1";
             // in het midden van het scherm zetten
+            $(".eindSpelMenu").css("display","block");
+            // in het midden van het scherm zetten
             $(".eindSpelMenu").animate({bottom: "50%"},800); 
             // call jquery method
             $(".divHide").removeClass("hide");
@@ -189,7 +191,7 @@ function repeat()
         // stoppen met timer
         clearInterval(klokId); nummer = 0;
         // nu mag men weer klikken
-        setTimeout(function(){ magklikken = true; timerNogNietGestart = false; }, 800); 
+        setTimeout(function(){ magklikken = true; timerNogNietGestart = false; }, 400); 
         // change bool
         telMaarOp = false;
     }
@@ -232,7 +234,7 @@ function move(array1,array2,top,left,kolomEnRij)
         document.getElementById(vorigeId).style.borderColor ="#80ff80";
     }
     // nu mag men weer klikken en mag de volgende speler spelen
-    setTimeout(function(){ magklikken = true; player1AanDeBeurt = !player1AanDeBeurt;}, 800);
+    setTimeout(function(){ magklikken = true; player1AanDeBeurt = !player1AanDeBeurt;}, 400);
 }
 //********************<function>********************
 function veranderKleur(kleur)
