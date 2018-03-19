@@ -16,15 +16,20 @@ var plaatsIdPion;
 var telMaarOp = true;
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
+var magklikken = true;
+var timerNogNietGestart = false;
 //********************<function>********************
 function press(id)
 {
-    // parse int
-    this.id = parseInt(id);
-    // zien wie aan de beurt is 
-    if(player1AanDeBeurt == false && id>=13 && id<25){ colorPion(id);}
-    // zien wie aan de beurt is 
-    if(player1AanDeBeurt == true && id>=1 && id <13) { colorPion(id);}
+    if(magklikken)
+    {
+        // parse int
+        this.id = parseInt(id);
+        // zien wie aan de beurt is 
+        if(player1AanDeBeurt == false && id>=13 && id<25){ colorPion(id);}
+        // zien wie aan de beurt is 
+        if(player1AanDeBeurt == true && id>=1 && id <13) { colorPion(id);}
+    }
 }
 //********************<function>********************
 function colorPion(id)
@@ -45,55 +50,60 @@ function colorPion(id)
 //********************<function>********************
 function movePion(kolom, rij)
 {
-    // plaats maken
-    kolomEnRij = kolom.toString() + ";" + rij.toString();
-    // plaats van Id nemen
-    var plaatsId = plaatsen[vorigeId]; plaatsIdPion = plaatsen[vorigeId];
-    // bool maken
-    var hoortErbij = false; var kanBewegen = false;
-    //*************<kijken of het gaat om een pion of plaats>*************
-    for(i=0;i<plaatsen.length;i++) { if(plaatsen[i]==kolomEnRij) {hoortErbij=true;break;}}
-    // check bool
-    if(!hoortErbij)
-    { 
-        // door array lopen
-        for(i=0;i<arrayMogelijkePlaatsen.length;i++) {if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}}
-        // wanneer men de pion toelaat om te bewegen
-        if(kanBewegen)
+    if(magklikken== true)
+    {
+        // plaats maken
+        kolomEnRij = kolom.toString() + ";" + rij.toString();
+        // plaats van Id nemen
+        var plaatsId = plaatsen[vorigeId]; plaatsIdPion = plaatsen[vorigeId];
+        // bool maken
+        var hoortErbij = false; var kanBewegen = false;
+        //*************<kijken of het gaat om een pion of plaats>*************
+        for(i=0;i<plaatsen.length;i++) { if(plaatsen[i]==kolomEnRij) {hoortErbij=true;break;}}
+        // check bool
+        if(!hoortErbij)
         {
-            // in array steken
-            var array1 = plaatsId.split(";"); var array2 = kolomEnRij.split(";");
-            // bool maken
-            var timerNietNodig = true; telMaarOp = true;
-            // top instellen
-            var top = parseFloat($("#"+vorigeId).css('top').replace(/[^-\d\.]/g, ''));
-            // left instellen
-            var left = parseFloat($("#"+vorigeId).css('left').replace(/[^-\d\.]/g, ''));
-            // wanneer men de pion voor de eerste keer beweegt
-            if(!isbegonnen){ isbegonnen = !isbegonnen; basic = top * 2; basic = parseFloat(basic);}
-            // zien hoeveel stappen men moet nemen
-            if(padTotPion.length==0){ move(array1,array2,top,left,kolomEnRij);}
-            // als het pad bestaat
-            else
+            // door array lopen
+            for(i=0;i<arrayMogelijkePlaatsen.length;i++) {if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}}
+            // wanneer men de pion toelaat om te bewegen
+            if(kanBewegen)
             {
-                // door array lopen
-                for(i=0;i<padTotPion.length;i++)
-                {
-                    // multidimensionale array
-                    for(b=0;b<padTotPion[i].length;b++){if(padTotPion[i][b] == kolomEnRij){timerNietNodig=false;ind=i;break;}}
-                }
-                // als er een pad bestaat, maar niet bestemt is voor onze pion
-                if(timerNietNodig) { move(array1,array2,top,left,kolomEnRij);}
-                // wanneer er wel een timer moet worden aangemaakt
+                // nu mag men niet meer op een plaats klikken
+                magklikken = false;
+                // in array steken
+                var array1 = plaatsId.split(";"); var array2 = kolomEnRij.split(";");
+                // bool maken
+                var timerNietNodig = true; telMaarOp = true;
+                // top instellen
+                var top = parseFloat($("#"+vorigeId).css('top').replace(/[^-\d\.]/g, ''));
+                // left instellen
+                var left = parseFloat($("#"+vorigeId).css('left').replace(/[^-\d\.]/g, ''));
+                // wanneer men de pion voor de eerste keer beweegt
+                if(!isbegonnen){ isbegonnen = !isbegonnen; basic = top * 2; basic = parseFloat(basic);}
+                // zien hoeveel stappen men moet nemen
+                if(padTotPion.length==0){ move(array1,array2,top,left,kolomEnRij);}
+                // als het pad bestaat
                 else
                 {
-                    // eerst de methode roepen, anders moet men 800 millesconden wachten
-                    repeat();
-                    // start timer  
-                    klokId = setInterval(repeat,800);
-                }
-            }
-        }
+                    // door array lopen
+                    for(i=0;i<padTotPion.length;i++)
+                    {
+                        // multidimensionale array
+                        for(b=0;b<padTotPion[i].length;b++){if(padTotPion[i][b] == kolomEnRij){timerNietNodig=false;ind=i;break;}}
+                    }
+                    // als er een pad bestaat, maar niet bestemt is voor onze pion
+                    if(timerNietNodig) { move(array1,array2,top,left,kolomEnRij);}
+                    // wanneer er wel een timer moet worden aangemaakt
+                    else
+                    {
+                        // eerst de methode roepen, anders moet men 800 millesconden wachten
+                        repeat();
+                        // start timer  
+                        if(!timerNogNietGestart){klokId = setInterval(repeat,800); timerNogNietGestart = true;}
+                    }
+                 }
+              }
+           }
     }
 }
 //********************<function>********************
@@ -174,7 +184,15 @@ function repeat()
     // plaats updaten
     plaatsen[vorigeId] = plaatsIdPion;
     // timer stoppen als de array erdoor is 
-    if(padTotPion[ind][nummer] == kolomEnRij){clearInterval(klokId); nummer = 0; telMaarOp = false;}
+    if(padTotPion[ind][nummer] == kolomEnRij)
+    {
+        // stoppen met timer
+        clearInterval(klokId); nummer = 0;
+        // nu mag men weer klikken
+        setTimeout(function(){ magklikken = true; timerNogNietGestart = false; }, 800); 
+        // change bool
+        telMaarOp = false;
+    }
     // optellen met 1
     if(telMaarOp){nummer++;}
 }
@@ -213,8 +231,8 @@ function move(array1,array2,top,left,kolomEnRij)
         // border kleur aanpassen
         document.getElementById(vorigeId).style.borderColor ="#80ff80";
     }
-    // andere speler aan de beurt
-    player1AanDeBeurt = !player1AanDeBeurt;
+    // nu mag men weer klikken en mag de volgende speler spelen
+    setTimeout(function(){ magklikken = true; player1AanDeBeurt = !player1AanDeBeurt;}, 800);
 }
 //********************<function>********************
 function veranderKleur(kleur)
