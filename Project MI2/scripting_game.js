@@ -16,12 +16,12 @@ var plaatsIdPion;
 var telMaarOp = true;
 var scorePlayer1 = 0;
 var scorePlayer2 = 0;
-var magklikken = true;
+var aantalKeerGeklikt = 0;
 var timerNogNietGestart = false;
 //********************<function>********************
 function press(id)
 {
-    if(magklikken)
+    if(aantalKeerGeklikt == 0)
     {
         // parse int
         this.id = parseInt(id);
@@ -50,7 +50,7 @@ function colorPion(id)
 //********************<function>********************
 function movePion(kolom, rij)
 {
-    if(magklikken== true)
+    if(aantalKeerGeklikt == 0)
     {
         // plaats maken
         kolomEnRij = kolom.toString() + ";" + rij.toString();
@@ -63,13 +63,13 @@ function movePion(kolom, rij)
         // check bool
         if(!hoortErbij)
         {
+            // aantal keren klikken + 1
+            aantalKeerGeklikt++;
             // door array lopen
             for(i=0;i<arrayMogelijkePlaatsen.length;i++) {if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}}
             // wanneer men de pion toelaat om te bewegen
             if(kanBewegen)
             {
-                // nu mag men niet meer op een plaats klikken
-                magklikken = false;
                 // in array steken
                 var array1 = plaatsId.split(";"); var array2 = kolomEnRij.split(";");
                 // bool maken
@@ -191,7 +191,7 @@ function repeat()
         // stoppen met timer
         clearInterval(klokId); nummer = 0;
         // nu mag men weer klikken
-        setTimeout(function(){ magklikken = true; timerNogNietGestart = false; }, 400); 
+        setTimeout(function(){aantalKeerGeklikt = 0; timerNogNietGestart = false; }, 400); 
         // change bool
         telMaarOp = false;
     }
@@ -234,7 +234,7 @@ function move(array1,array2,top,left,kolomEnRij)
         document.getElementById(vorigeId).style.borderColor ="#80ff80";
     }
     // nu mag men weer klikken en mag de volgende speler spelen
-    setTimeout(function(){ magklikken = true; player1AanDeBeurt = !player1AanDeBeurt;}, 400);
+    setTimeout(function(){ aantalKeerGeklikt = 0; player1AanDeBeurt = !player1AanDeBeurt;}, 400);
 }
 //********************<function>********************
 function veranderKleur(kleur)
