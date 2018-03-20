@@ -63,13 +63,13 @@ function movePion(kolom, rij)
         // check bool
         if(!hoortErbij)
         {
-            // aantal keren klikken + 1
-            aantalKeerGeklikt++;
             // door array lopen
             for(i=0;i<arrayMogelijkePlaatsen.length;i++) {if(kolomEnRij==arrayMogelijkePlaatsen[i]) {kanBewegen=true;break;}}
             // wanneer men de pion toelaat om te bewegen
             if(kanBewegen)
             {
+                // aantal keren klikken + 1
+                aantalKeerGeklikt++;
                 // in array steken
                 var array1 = plaatsId.split(";"); var array2 = kolomEnRij.split(";");
                 // bool maken
