@@ -102,6 +102,7 @@ function movePion(kolom, rij)
                         if(!timerNogNietGestart){klokId = setInterval(repeat,800); timerNogNietGestart = true;}
                     }
                  }
+                 arrayMogelijkePlaatsen = [];
               }
            }
     }
