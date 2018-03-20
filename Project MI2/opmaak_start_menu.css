@@ -193,8 +193,6 @@ input[type=text]
 .player1,.player2
 {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     font-size: 15pt;
     color: #1aff1a;
     opacity: 0;
@@ -202,8 +200,18 @@ input[type=text]
 .player1
 {
     top: 2em;
+    color: #4dd2ff;
+    right: 50%;
+    transform: rotate(180deg) translateX(-50%);
 }
 .player2
 {
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 2em;
+    color: #990000;
+}
+.player2, .player1
+{
+    text-shadow: 2px 1px #f2f2f2;
 }
