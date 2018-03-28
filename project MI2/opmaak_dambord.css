@@ -1,0 +1,53 @@
+.damBord
+{
+    position: absolute;
+    display: table;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    border: 3px solid #4d4d4d;
+    box-shadow: 0 0 0.5em white;
+}
+.whiteCase, .blackCase
+{
+    width: 11.5vw;
+    height: 11.5vw;
+    float: left;
+}
+.whiteCase
+{
+    background-color: #f9f9eb;
+}
+.blackCase
+{
+    background-color: #BA7A3A;
+}
+.clear
+{
+    clear: both;
+}
+.dameBlanche, .dameNoir
+{
+    width: 8vw;
+    height: 8vw;
+    position: relative;
+    border-radius: 50%;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.dameBlanche
+{
+    background-color: #ff4d4d;
+    border: solid 3px white;
+}
+.dameNoir
+{
+    background-color: #0066cc;
+    border: solid 3px black;
+}
+.shadow
+{
+      box-shadow: 0 0 1.8em yellow;
+}
